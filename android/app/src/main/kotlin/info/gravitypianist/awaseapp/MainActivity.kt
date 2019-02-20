@@ -1,4 +1,4 @@
-package com.gravitypianist.awaseapp
+package info.gravitypianist.awaseapp
 
 import android.os.Bundle
 
