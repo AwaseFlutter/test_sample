@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:awase_app/blocs/event_list_fetch_bloc.dart';
 import 'package:awase_app/entities/data_with_cursor.dart';
 import 'package:awase_app/entities/event.dart';
+import 'package:awase_app/repositories/firebase/events_repository.dart';
 import 'package:awase_app/views/events/show.dart';
-import 'package:flutter/material.dart';
 
 class EventsIndex extends StatefulWidget {
   @override
@@ -10,13 +12,12 @@ class EventsIndex extends StatefulWidget {
 }
 
 class EventsIndexState extends State<EventsIndex> {
-  EventListFetchBloc _fetchBloc;
+  final EventListFetchBloc _fetchBloc = EventListFetchBloc(FirebaseEventsRepository());
 
   @override
   void initState() {
     super.initState();
-    _fetchBloc = EventListFetchBloc();
-    _fetchBloc.cursor.add(null);
+    _fetchBloc.dispatch(CursorChanged(cursor: null));
   }
 
   @override
@@ -28,18 +29,16 @@ class EventsIndexState extends State<EventsIndex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('イベント一覧'),
-        ),
-        body: RefreshIndicator(
+      appBar: AppBar(
+        title: Text('イベント一覧'),
+      ),
+      body: RefreshIndicator(
           onRefresh: () async {
-            _fetchBloc.cursor.add(null);
+            _fetchBloc.dispatch(CursorChanged(cursor: null));
           },
-          child: StreamBuilder<DataWithCursor<Event>>(
-            stream: _fetchBloc.eventList,
-            initialData: _fetchBloc.initialEventList,
-            builder: (context, snap) {
-              final list = snap.data;
+          child: BlocBuilder(
+            bloc: _fetchBloc,
+            builder: (context, list) {
               return ListView.builder(
                 itemCount: list.data.length,
                 itemBuilder: (context, index) {
@@ -48,7 +47,7 @@ class EventsIndexState extends State<EventsIndex> {
                     margin: EdgeInsets.only(top: 8.0),
                     child: GestureDetector(
                       onTap: () async {
-                        await Navigator.push(context, MaterialPageRoute<Null>(
+                        await Navigator.push(context, MaterialPageRoute<void>(
                           settings: RouteSettings(name: 'events/show'),
                           builder: (_context) => EventsShow(id: event.id)
                         ));
@@ -87,7 +86,7 @@ class EventsIndexState extends State<EventsIndex> {
               );
             },
           ),
-        )
+        ),
     );
   }
 }

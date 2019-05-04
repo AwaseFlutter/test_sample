@@ -1,27 +1,39 @@
 import 'dart:async';
+import 'package:meta/meta.dart';
+import 'package:equatable/equatable.dart';
+import 'package:bloc/bloc.dart';
 import 'package:awase_app/entities/data_with_cursor.dart';
 import 'package:awase_app/entities/event.dart';
 import 'package:awase_app/repositories/events_repository.dart';
 
-class EventListFetchBloc {
-  final _cursor = StreamController<String>();
-  Sink<String> get cursor => _cursor.sink;
+@immutable
+abstract class EventListFetchEvent extends Equatable {
+  EventListFetchEvent([List props = const[]]) : super(props);
+}
 
-  final _eventList = StreamController<DataWithCursor<Event>>();
-  Stream<DataWithCursor<Event>> get eventList => _eventList.stream;
-  DataWithCursor<Event> get initialEventList => DataWithCursor();
+class CursorChanged extends EventListFetchEvent {
+  final String cursor;
 
-  EventListFetchBloc() {
-    _cursor.stream.listen(_handleCursorChanged);
+  CursorChanged({ @required this.cursor }) : super([cursor]);
+
+  @override
+  String toString() => 'CursorChanged { cursor: $cursor }';
+}
+
+class EventListFetchBloc extends Bloc<EventListFetchEvent, DataWithCursor<Event>>  {
+  EventsRepository _eventsRepository;
+
+  EventListFetchBloc(EventsRepository eventRepository) {
+    _eventsRepository = eventRepository;
   }
 
-  Future<void> dispose() async {
-    await _cursor.close();
-    await _eventList.close();
-  }
+  @override
+  DataWithCursor<Event> get initialState => DataWithCursor();
 
-  Future<void> _handleCursorChanged(String cursor) async {
-    final list = await EventsRepository().index(cursor: cursor);
-    _eventList.sink.add(list);
+  @override
+  Stream<DataWithCursor<Event>> mapEventToState(EventListFetchEvent event) async* {
+    if (event is CursorChanged) {
+      yield await _eventsRepository.fetch(cursor: event.cursor);
+    }
   }
 }

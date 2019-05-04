@@ -1,5 +1,8 @@
+import 'package:meta/meta.dart';
+
 typedef T FromJsonCallback<T>(Map<String, dynamic> json);
 
+@immutable
 class DataWithCursor<T> {
   final String cursor;
   final List<T> data;

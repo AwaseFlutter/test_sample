@@ -1,6 +1,7 @@
-class Event {
-  static const DEFAULT_IMAGE_URL = 'https://';
+import 'package:meta/meta.dart';
 
+@immutable
+class Event {
   final String id;
   final String title;
   final String description;
