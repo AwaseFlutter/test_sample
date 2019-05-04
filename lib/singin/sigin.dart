@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatefulWidget {
+import 'package:awase_app/repository/current_user_repository.dart';
 
-  SignInPage({Key key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  final CurrentUserRepository currentUser;
+
+  SignInPage({Key key, @required this.currentUser})
+      : assert(currentUser != null),
+        super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
+  CurrentUserRepository get currentUser => widget.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
