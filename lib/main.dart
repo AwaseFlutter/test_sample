@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:awase_app/views/events/index.dart';
 
+import 'package:awase_app/navigator.dart';
+import 'package:awase_app/repository/current_user_repository.dart';
+import 'package:awase_app/singin/sigin.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final CurrentUserRepository currentUser;
+
+  MyApp() : this.currentUser = CurrentUserRepository(), super() ;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: <String, WidgetBuilder> {
+        Nav.SIGN_IN: (BuildContext context) => new SignInPage(currentUser: currentUser),
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -46,17 +57,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () { Navigator.of(context).pushNamed(Nav.SIGN_IN); },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
