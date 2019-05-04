@@ -57,12 +57,14 @@ class EventsDetailState extends State<EventsDetail> {
   Widget build(BuildContext context) {
     return BlocBuilder(
       bloc: _detailBloc,
-      builder: (context, event) {
+      builder: (context, state) {
+        final event = state is EventDetailLoaded ? state.event : null;
+
         return Scaffold(
           appBar: AppBar(
-            title: Text(null == event.id ? 'イベント詳細' : event.title),
+            title: Text(event == null ? 'イベント詳細' : event.title),
           ),
-          body: null == event.id ? Container() : Container(
+          body: event == null ? Container() : Container(
             margin: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

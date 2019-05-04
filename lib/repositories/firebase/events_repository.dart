@@ -6,7 +6,7 @@ import 'package:awase_app/models/data_with_cursor.dart';
 import 'package:awase_app/models/event.dart';
 
 class FirebaseEventsRepository implements EventsRepository {
-  Future<DataWithCursor<Event>> fetch({ String cursor }) async {
+  Future<DataWithCursor<Event>> search({ String cursor, String searchText }) async {
     final snapshot = await firestore.collection('events').getDocuments();
     final dataWithCursor = {
       'cursor': null,

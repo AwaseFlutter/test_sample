@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awase_app/blocs/event_list_fetch_bloc.dart';
+import 'package:awase_app/blocs/event_list_bloc.dart';
 import 'package:awase_app/repository/current_user_repository.dart';
 import 'package:awase_app/repositories/firebase/events_repository.dart';
 import 'package:awase_app/screens/event_detail.dart';
@@ -19,7 +19,7 @@ class EventsList extends StatefulWidget {
 
 class EventsListState extends State<EventsList> {
   final CurrentUserRepository _currentUser;
-  final EventListFetchBloc _fetchBloc = EventListFetchBloc(FirebaseEventsRepository());
+  final EventListBloc _listBloc = EventListBloc(FirebaseEventsRepository());
 
   EventsListState({ @required CurrentUserRepository currentUser })
       : assert(currentUser != null),
@@ -29,12 +29,12 @@ class EventsListState extends State<EventsList> {
   @override
   void initState() {
     super.initState();
-    _fetchBloc.dispatch(CursorChanged(cursor: null));
+    _listBloc.dispatch(CursorChanged(cursor: null));
   }
 
   @override
   void dispose() {
-    _fetchBloc.dispose();
+    _listBloc.dispose();
     super.dispose();
   }
 
@@ -46,11 +46,13 @@ class EventsListState extends State<EventsList> {
       ),
       body: RefreshIndicator(
           onRefresh: () async {
-            _fetchBloc.dispatch(CursorChanged(cursor: null));
+            _listBloc.dispatch(CursorChanged(cursor: null));
           },
           child: BlocBuilder(
-            bloc: _fetchBloc,
-            builder: (context, list) {
+            bloc: _listBloc,
+            builder: (context, state) {
+              final list = state.eventList;
+
               return ListView.builder(
                 itemCount: list.data.length,
                 itemBuilder: (context, index) {

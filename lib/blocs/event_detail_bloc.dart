@@ -33,7 +33,28 @@ class ParticipantJoined extends EventDetailEvent {
   String toString() => 'ParticfipantJoined { participant: $participant }';
 }
 
-class EventDetailBloc extends Bloc<EventDetailEvent, Event> {
+@immutable
+abstract class EventDetailState extends Equatable {
+  EventDetailState([List props = const []]) : super(props);
+}
+
+class EventDetailLoading extends EventDetailState {
+  @override
+  String toString() => 'EventDetailLoading';
+}
+
+class EventDetailLoaded extends EventDetailState {
+  final Event event;
+
+  EventDetailLoaded({ @required this.event })
+      : assert(event != null),
+        super([event]);
+
+  @override
+  String toString() => 'EventDetailLoaded { event: $event }';
+}
+
+class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
   EventsRepository _eventsRepository;
 
   Event _event;
@@ -43,18 +64,18 @@ class EventDetailBloc extends Bloc<EventDetailEvent, Event> {
   }
 
   @override
-  Event get initialState => Event();
+  EventDetailState get initialState => EventDetailLoading();
 
   @override
-  Stream<Event> mapEventToState(EventDetailEvent event) async* {
+  Stream<EventDetailState> mapEventToState(EventDetailEvent event) async* {
     if (event is IdSet) {
       _event = await _eventsRepository.fetchDetail(event.id);
-      yield _event;
+      yield EventDetailLoaded(event: _event);
     }
     if (event is ParticipantJoined) {
       await _eventsRepository.join(_event.id, participant: event.participant); // TODO: Set current user
       _event = await _eventsRepository.fetchDetail(_event.id);
-      yield _event;
+      yield EventDetailLoaded(event: _event);
     }
   }
 
