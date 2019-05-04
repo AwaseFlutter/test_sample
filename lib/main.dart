@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:awase_app/navigator.dart';
+import 'package:awase_app/repository/current_user_repository.dart';
 import 'package:awase_app/singin/sigin.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final CurrentUserRepository currentUser;
+
+  MyApp() : this.currentUser = CurrentUserRepository(), super() ;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: <String, WidgetBuilder> {
-        Nav.SIGN_IN: (BuildContext context) => new SignInPage(),
+        Nav.SIGN_IN: (BuildContext context) => new SignInPage(currentUser: currentUser),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
