@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:awase_app/views/events/index.dart';
+import 'package:awase_app/screens/event_list.dart';
 
 import 'package:awase_app/navigator.dart';
 import 'package:awase_app/repository/current_user_repository.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: EventsIndex(),
+      home: EventsList(currentUser: currentUser),
     );
   }
 }

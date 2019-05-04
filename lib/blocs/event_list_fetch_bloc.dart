@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:awase_app/entities/data_with_cursor.dart';
-import 'package:awase_app/entities/event.dart';
+import 'package:awase_app/models/data_with_cursor.dart';
+import 'package:awase_app/models/event.dart';
 import 'package:awase_app/repositories/events_repository.dart';
 
 @immutable

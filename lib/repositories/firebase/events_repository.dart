@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:awase_app/entities/user.dart';
+import 'package:awase_app/models/user.dart';
 import 'package:awase_app/repositories/events_repository.dart';
-import 'package:awase_app/entities/data_with_cursor.dart';
-import 'package:awase_app/entities/event.dart';
+import 'package:awase_app/models/data_with_cursor.dart';
+import 'package:awase_app/models/event.dart';
 
 class FirebaseEventsRepository implements EventsRepository {
   Future<DataWithCursor<Event>> fetch({ String cursor }) async {

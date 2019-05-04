@@ -1,28 +1,45 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awase_app/entities/event.dart';
+import 'package:awase_app/models/event.dart';
+import 'package:awase_app/repository/current_user_repository.dart';
 import 'package:awase_app/repositories/firebase/events_repository.dart';
 import 'package:awase_app/blocs/event_detail_bloc.dart';
 
 typedef Future<void> OnTapBottomNavigationType(int page);
 
-class EventsShow extends StatefulWidget {
+class EventsDetail extends StatefulWidget {
+  final CurrentUserRepository _currentUser;
   final String _id;
 
-  EventsShow({ Key key, @required String id }): _id = id, super(key: key);
+  EventsDetail({
+    Key key,
+    @required CurrentUserRepository currentUser,
+    @required String id,
+  })
+      : assert(currentUser != null),
+        assert(id != null),
+        _currentUser = currentUser,
+        _id = id,
+        super(key: key);
 
   @override
-  EventsShowState createState() => EventsShowState(id: _id);
+  EventsDetailState createState() => EventsDetailState(currentUser: _currentUser, id: _id);
 }
 
-class EventsShowState extends State<EventsShow> {
+class EventsDetailState extends State<EventsDetail> {
   static const String DEFAULT_IMAGE_URL = 'https://img.icons8.com/material-sharp/24/000000/spinner-frame-5.png';
 
+  final CurrentUserRepository _currentUser;
   final String _id;
   final EventDetailBloc _detailBloc = EventDetailBloc(FirebaseEventsRepository());
 
-  EventsShowState({ @required String id }): _id = id;
+  EventsDetailState({ @required CurrentUserRepository currentUser, @required String id })
+      : assert(currentUser != null),
+        assert(id != null),
+        _currentUser = currentUser,
+        _id = id,
+        super();
 
   @override
   void initState() {
@@ -111,7 +128,7 @@ class EventsShowState extends State<EventsShow> {
           FlatButton(
             child: Text('参加'),
             onPressed: () async {
-              _detailBloc.dispatch(ParticipantJoined());
+              _detailBloc.dispatch(ParticipantJoined(participant: _currentUser.user()));
               Navigator.of(context).pop();
             },
           ),

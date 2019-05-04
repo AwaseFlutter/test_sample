@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:awase_app/blocs/event_list_fetch_bloc.dart';
-import 'package:awase_app/entities/data_with_cursor.dart';
-import 'package:awase_app/entities/event.dart';
+import 'package:awase_app/repository/current_user_repository.dart';
 import 'package:awase_app/repositories/firebase/events_repository.dart';
-import 'package:awase_app/views/events/show.dart';
+import 'package:awase_app/screens/event_detail.dart';
 
-class EventsIndex extends StatefulWidget {
+class EventsList extends StatefulWidget {
+  final CurrentUserRepository _currentUser;
+
+  EventsList({ Key key, @required CurrentUserRepository currentUser })
+      : assert(currentUser != null),
+        _currentUser = currentUser,
+        super(key: key);
+
   @override
-  EventsIndexState createState() => EventsIndexState();
+  EventsListState createState() => EventsListState(currentUser: _currentUser);
 }
 
-class EventsIndexState extends State<EventsIndex> {
+class EventsListState extends State<EventsList> {
+  final CurrentUserRepository _currentUser;
   final EventListFetchBloc _fetchBloc = EventListFetchBloc(FirebaseEventsRepository());
+
+  EventsListState({ @required CurrentUserRepository currentUser })
+      : assert(currentUser != null),
+        _currentUser = currentUser,
+        super();
 
   @override
   void initState() {
@@ -49,7 +61,7 @@ class EventsIndexState extends State<EventsIndex> {
                       onTap: () async {
                         await Navigator.push(context, MaterialPageRoute<void>(
                           settings: RouteSettings(name: 'events/show'),
-                          builder: (_context) => EventsShow(id: event.id)
+                          builder: (_context) => EventsDetail(currentUser: _currentUser, id: event.id)
                         ));
                       },
                       child: Card(
