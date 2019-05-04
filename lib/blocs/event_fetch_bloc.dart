@@ -10,16 +10,16 @@ class EventFetchBloc {
   Stream<Event> get event => _event.stream;
 
   EventFetchBloc() {
-    _id.stream.listen(handleIdChanged);
-  }
-
-  Future<void> handleIdChanged(String id) async {
-    final event = await EventsRepository().show(id);
-    _event.sink.add(event);
+    _id.stream.listen(_handleIdChanged);
   }
 
   Future<void> dispose() async {
     await _id.close();
     await _event.close();
+  }
+
+  Future<void> _handleIdChanged(String id) async {
+    final event = await EventsRepository().show(id);
+    _event.sink.add(event);
   }
 }

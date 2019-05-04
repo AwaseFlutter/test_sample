@@ -12,16 +12,16 @@ class EventListFetchBloc {
   DataWithCursor<Event> get initialEventList => DataWithCursor();
 
   EventListFetchBloc() {
-    _cursor.stream.listen(handleCursorChanged);
-  }
-
-  Future<void> handleCursorChanged(String cursor) async {
-    final list = await EventsRepository().index(cursor: cursor);
-    _eventList.sink.add(list);
+    _cursor.stream.listen(_handleCursorChanged);
   }
 
   Future<void> dispose() async {
     await _cursor.close();
     await _eventList.close();
+  }
+
+  Future<void> _handleCursorChanged(String cursor) async {
+    final list = await EventsRepository().index(cursor: cursor);
+    _eventList.sink.add(list);
   }
 }
