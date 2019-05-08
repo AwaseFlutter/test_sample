@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:awase_app/navigator.dart';
-import 'package:awase_app/repository/current_user_repository.dart';
-import 'package:awase_app/singin/sigin.dart';
+import 'package:awase_app/repositories/current_user_repository.dart';
+import 'package:awase_app/widgets/sign_in.dart';
 
 void main() => runApp(MyApp());
 
