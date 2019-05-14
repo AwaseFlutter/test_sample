@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:awase_app/blocs/event_list_bloc.dart';
-import 'package:awase_app/repository/current_user_repository.dart';
+import 'package:awase_app/repositories/current_user_repository.dart';
 import 'package:awase_app/repositories/firebase/events_repository.dart';
 import 'package:awase_app/screens/event_detail.dart';
 
