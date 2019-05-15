@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "414852188973",
+    "firebase_url": "https://awase-app.firebaseio.com",
+    "project_id": "awase-app",
+    "storage_bucket": "awase-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414852188973:android:f32f5fe864dfecf4",
+        "android_client_info": {
+          "package_name": "info.gravitypianist.awaseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414852188973-d3o6qp8oq0cgortfvdh199aba3p7l6cq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdwHwJuK7AHR3u9PPMe_mrRg7ud6wFBO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414852188973-d3o6qp8oq0cgortfvdh199aba3p7l6cq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414852188973-uq85eh5alje1v2tg0hceeu0g0e0r8gup.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "info.gravitypianist.awaseapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
