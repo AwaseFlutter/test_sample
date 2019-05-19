@@ -46,9 +46,6 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
   SignInBloc get _signInBloc => widget.signInBloc;
 
   @override

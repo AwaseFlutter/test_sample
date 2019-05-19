@@ -1,11 +1,15 @@
 import 'package:awase_app/models/user.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class CurrentUserRepository {
+  FirebaseUser firebaseUser;
+
   bool isSingIn() {
-    return false;
+    return firebaseUser != null;
   }
 
   User user() {
-    return User();
+    return User(name: this.firebaseUser.displayName);
   }
 }

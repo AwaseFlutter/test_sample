@@ -64,6 +64,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
 
     final FirebaseUser user = await _auth.signInWithCredential(credential);
+    _currentUser.firebaseUser = user;
 
     yield SignInFinished();
   }
