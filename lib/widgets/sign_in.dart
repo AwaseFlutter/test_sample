@@ -60,39 +60,22 @@ class _SignInFormState extends State<SignInForm> {
             Navigator.of(context).pop();
           }
         },
-        child: Column(children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-                labelText: "mailaddress", hintText: "sample@example.com"),
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            controller: _emailController,
-          ),
-          TextFormField(
-            decoration:
-            InputDecoration(labelText: "password", hintText: "8文字以上の英数字"),
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.next,
-            controller: _passwordController,
-          ),
-          MaterialButton(
-            shape: StadiumBorder(),
-            color: Colors.red,
-            textColor: Colors.white,
-            onPressed: () {
-              _signInBloc.dispatch(EmailSignInEvent(
-                  email: _emailController.text,
-                  password: _passwordController.text)
-              );
-            },
-            child: Text("ログイン"),
-          ),
-          InkWell(
-            child: Text("アカウントを作成する"),
-            onTap: () {
-            },
-          )
-        ])
+        child: new Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Padding(
+                      padding: new EdgeInsets.all(10.0),
+                      child: new RaisedButton(
+                          child: const Text('Google login'),
+                          onPressed: () {
+                            _signInBloc.dispatch(GoogleSignInEvent());
+                          }
+                      )
+                  )
+                ]
+            )
+        )
     );
   }
 }

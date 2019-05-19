@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>414852188973-uq85eh5alje1v2tg0hceeu0g0e0r8gup.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.414852188973-uq85eh5alje1v2tg0hceeu0g0e0r8gup</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>414852188973-qoj0106297k7t6hu7u0lfher9sk6sa91.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDXv9JvuCu3-SOrvaBHkflJSHZq5k6ZRQc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>414852188973</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>info.gravitypianist.awaseapp</string>
+	<key>PROJECT_ID</key>
+	<string>awase-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>awase-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:414852188973:ios:f32f5fe864dfecf4</string>
+	<key>DATABASE_URL</key>
+	<string>https://awase-app.firebaseio.com</string>
+</dict>
+</plist>

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 import 'package:awase_app/repositories/current_user_repository.dart';
 
-abstract class SignInState { }
+abstract class SignInState {}
 
 class SignInInitialized extends SignInState {
   @override
@@ -21,38 +24,47 @@ class SignInFinished extends SignInState {
   }
 }
 
-abstract class SignInEvent { }
+abstract class SignInEvent {}
 
-class EmailSignInEvent extends SignInEvent {
-  String email;
-  String password;
-
-  EmailSignInEvent({@required this.email, @required this.password});
-}
+class GoogleSignInEvent extends SignInEvent {}
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = new GoogleSignIn();
+
   CurrentUserRepository _currentUser;
 
   SignInBloc({Key key, @required CurrentUserRepository currentUser})
-      : assert(currentUser != null), _currentUser = currentUser;
+      : assert(currentUser != null),
+        _currentUser = currentUser;
 
   @override
   SignInState get initialState {
     if (_currentUser.isSingIn()) {
       return SignInFinished();
-    }else{
+    } else {
       return SignInInitialized();
     }
   }
 
   @override
   Stream<SignInState> mapEventToState(SignInEvent event) async* {
-    if (event is EmailSignInEvent) {
-      yield emailSigInIn(event);
+    if (event is GoogleSignInEvent) {
+      yield *googleSigInIn(event);
     }
   }
 
-  SignInState emailSigInIn(EmailSignInEvent event) {
-    return SignInFinished();
+  Stream<SignInState> googleSigInIn(GoogleSignInEvent event) async* {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final FirebaseUser user = await _auth.signInWithCredential(credential);
+
+    yield SignInFinished();
   }
 }
