@@ -59,7 +59,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  static final CurrentUserRepository _currentUser = CurrentUserRepository()
+  static final CurrentUserRepository _currentUser = CurrentUserRepository();
   int _selectedIndex = 0;
 
   final List<Widget> _pages = <Widget>[
