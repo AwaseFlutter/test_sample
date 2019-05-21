@@ -7,7 +7,7 @@ class DataWithCursor<T> {
   final String cursor;
   final List<T> data;
 
-  DataWithCursor({ this.cursor, List<T> data }):
+  DataWithCursor({ @required this.cursor, @required List<T> data }):
     this.data = data ?? [];
 
   static DataWithCursor<T> fromJson<T>(Map<String, dynamic> json, FromJsonCallback<T> callback) {

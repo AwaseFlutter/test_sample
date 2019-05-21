@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:meta/meta.dart';
-import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 import 'package:awase_app/models/data_with_cursor.dart';
 import 'package:awase_app/models/event.dart';
 import 'package:awase_app/repositories/events_repository.dart';
@@ -24,8 +24,8 @@ class SearchTextChanged extends EventListFetchEvent {
   final String searchText;
 
   SearchTextChanged({ @required this.searchText })
-      : assert(searchText != null),
-        super([searchText]);
+    : assert(searchText != null),
+      super([searchText]);
 
   @override
   String toString() => 'SearchTextChanged { searchText: $searchText }';
@@ -39,19 +39,28 @@ abstract class EventListState extends Equatable {
 class EventListLoading extends EventListState {
   @override
   String toString() => 'EventListLoading';
-
-  DataWithCursor<Event> get eventList => DataWithCursor();
 }
 
 class EventListLoaded extends EventListState {
   final DataWithCursor<Event> eventList;
 
   EventListLoaded({ @required this.eventList })
-      : assert(eventList != null),
-        super([eventList]);
+    : assert(eventList != null),
+      super([eventList]);
 
   @override
   String toString() => 'EventListLoaded { event: $eventList }';
+}
+
+class EventListLoadFailed extends EventListState {
+  final error;
+
+  EventListLoadFailed({ @required this.error })
+    : assert(error != null),
+      super([error]);
+
+  @override
+  String toString() => 'EventListLoadFailed { error: $error }';
 }
 
 class EventListBloc extends Bloc<EventListFetchEvent, EventListState>  {
@@ -60,9 +69,9 @@ class EventListBloc extends Bloc<EventListFetchEvent, EventListState>  {
   String _cursor;
   String _searchText;
 
-  EventListBloc(EventsRepository eventRepository) {
-    _eventsRepository = eventRepository;
-  }
+  EventListBloc(EventsRepository eventRepository)
+    : assert(eventRepository != null),
+      _eventsRepository = eventRepository;
 
   @override
   EventListState get initialState => EventListLoading();
@@ -71,13 +80,20 @@ class EventListBloc extends Bloc<EventListFetchEvent, EventListState>  {
   Stream<EventListState> mapEventToState(EventListFetchEvent event) async* {
     if (event is CursorChanged) {
       _cursor = event.cursor;
-      final eventList = await _eventsRepository.search(cursor: _cursor, searchText: _searchText);
-      yield EventListLoaded(eventList: eventList);
+      yield await _executeSearch();
     }
     if (event is SearchTextChanged) {
       _searchText = event.searchText;
+      yield await _executeSearch();
+    }
+  }
+
+  Future<EventListState> _executeSearch() async {
+    try {
       final eventList = await _eventsRepository.search(cursor: _cursor, searchText: _searchText);
-      yield EventListLoaded(eventList: eventList);
+      return EventListLoaded(eventList: eventList);
+    } catch (error) {
+      return EventListLoadFailed();
     }
   }
 }

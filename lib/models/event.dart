@@ -7,7 +7,16 @@ class Event {
   final String description;
   final String imageUrl;
 
-  Event({ this.id, this.title, this.description, this.imageUrl });
+  Event({
+    @required this.id,
+    @required this.title,
+    @required this.description,
+    @required this.imageUrl,
+  }):
+    assert(id != null),
+    assert(title != null),
+    assert(description != null),
+    assert(imageUrl != null);
 
   static Event fromJson(Map<String, dynamic> json) {
     return Event(

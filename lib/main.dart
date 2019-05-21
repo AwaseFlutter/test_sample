@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = <Widget>[
-    EventsList(currentUser: _currentUser),
+    EventList(currentUser: _currentUser),
     Text(
       'Index 1: Home',
     ),
