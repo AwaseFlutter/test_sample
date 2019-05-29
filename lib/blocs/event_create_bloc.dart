@@ -54,6 +54,17 @@ class EventCreated extends EventCreateState {
   String toString() => 'EventCreated { event: $event }';
 }
 
+class EventCreateFailed extends EventCreateState {
+  final Error error;
+
+  EventCreateFailed({ @required this.error }):
+        assert(error != null),
+        super([error]);
+
+  @override
+  String toString() => 'EventCreated { error: $error }';
+}
+
 class EventCreateBloc extends Bloc<EventCreateEvent, EventCreateState> {
   final EventsRepository _eventsRepository;
 
@@ -67,13 +78,17 @@ class EventCreateBloc extends Bloc<EventCreateEvent, EventCreateState> {
   @override
   Stream<EventCreateState> mapEventToState(EventCreateEvent event) async* {
     if (event is CreateEvent) {
-      final eventData = await _eventsRepository.create(
-        ownerId: event.ownerId,
-        title: event.title,
-        description: event.description,
-        image: event.image,
-      );
-      yield EventCreated(event: eventData);
+      try {
+        final eventData = await _eventsRepository.create(
+          ownerId: event.ownerId,
+          title: event.title,
+          description: event.description,
+          image: event.image,
+        );
+        yield EventCreated(event: eventData);
+      } catch (error) {
+        yield EventCreateFailed(error: error);
+      }
     }
   }
 }

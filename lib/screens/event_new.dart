@@ -44,6 +44,9 @@ class EventNewState extends State<EventNew> {
             builder: (_context) => EventDetail(currentUser: _currentUser, id: state.event.id),
           ));
         }
+        if (state is EventCreateFailed) {
+          // TODO: Show alert.
+        }
       },
       child: BlocBuilder(
         bloc: _createBloc,

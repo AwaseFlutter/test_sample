@@ -53,7 +53,7 @@ class EventListLoaded extends EventListState {
 }
 
 class EventListLoadFailed extends EventListState {
-  final error;
+  final Error error;
 
   EventListLoadFailed({ @required this.error })
     : assert(error != null),

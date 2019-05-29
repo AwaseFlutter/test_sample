@@ -63,7 +63,7 @@ class EventDetailLoaded extends EventDetailState {
 }
 
 class EventDetailLoadFailed extends EventDetailState {
-  final error;
+  final Error error;
 
   EventDetailLoadFailed({ @required this.error })
     : assert(error != null),
