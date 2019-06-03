@@ -104,16 +104,16 @@ class EventListState extends State<EventList> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.push(context, MaterialPageRoute<void>(
-            settings: RouteSettings(name: 'events/show'),
-            builder: (_context) => EventNew(currentUser: _currentUser)
-          ));
-        },
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.plus_one),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     await Navigator.push(context, MaterialPageRoute<void>(
+      //       settings: RouteSettings(name: 'events/show'),
+      //       builder: (_context) => EventNew(currentUser: _currentUser)
+      //     ));
+      //   },
+      //   backgroundColor: Colors.blue,
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }
