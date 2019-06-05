@@ -10,6 +10,6 @@ class CurrentUserRepository {
   }
 
   User user() {
-    return User(name: this.firebaseUser.displayName);
+    return User(id: this.firebaseUser.uid, name: this.firebaseUser.displayName);
   }
 }
