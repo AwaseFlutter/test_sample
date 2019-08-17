@@ -10,14 +10,17 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final CurrentUserRepository currentUser;
 
-  MyApp() : this.currentUser = CurrentUserRepository(), super() ;
+  MyApp()
+      : this.currentUser = CurrentUserRepository(),
+        super();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: <String, WidgetBuilder> {
-        Nav.SIGN_IN: (BuildContext context) => new SignInPage(currentUser: currentUser),
+      routes: <String, WidgetBuilder>{
+        Nav.SIGN_IN: (BuildContext context) =>
+            new SignInPage(currentUser: currentUser),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: "App",),
+      home: MyHomePage(title: "App"),
     );
   }
 }
@@ -58,22 +61,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   static final CurrentUserRepository _currentUser = CurrentUserRepository();
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = <Widget>[
-    EventList(currentUser: _currentUser),
-    Text(
-      'Index 1: Home',
-    ),
-    Text(
-      'Index 2: Home',
-    ),
-    Text(
-      'Index 3: Home',
-    ),
-  ];
+  List<Widget> _pages() => [
+        EventList(currentUser: _currentUser),
+        Text(
+          '$_selectedIndex',
+          key: Key("page"),
+        ),
+      ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -83,38 +80,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      body: _pages.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          title: Text('Home'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          title: Text('Search'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_box),
-          title: Text('Account'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Setting'),
-        ),
-      ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.grey[800],
-        onTap: _onItemTapped,),
+      body: _pages().elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('ホーム'),
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search, key: Key("search")),
+                title: Text('検索')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), title: Text('アカウント')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), title: Text('設定')),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          unselectedItemColor: Colors.grey[800],
+          onTap: _onItemTapped),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.of(context).pushNamed(Nav.SIGN_IN); },
+        onPressed: () {
+          Navigator.of(context).pushNamed(Nav.SIGN_IN);
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
