@@ -1,17 +1,11 @@
-# Awase App
+# Flutter モバイルアプリ開発バイブル
 
-A new Flutter application.
+このリポジトリでは、南里勇気、太田佳敬、矢田裕基、片桐寛貴[著] [「Flutter モバイルアプリ開発バイブル」（マイナビ出版）](https://www.amazon.co.jp/Flutter-%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA%E3%83%90%E3%82%A4%E3%83%96%E3%83%AB-%E5%8D%97%E9%87%8C%E5%8B%87%E6%B0%97/dp/4839970874)のサンプルコードを公開します。
 
+## サンプルコードリスト
 
-## Getting Started
+下記の章で掲載したサンプルコードをダウンロードできます。
 
-This project is a starting point for a Flutter application.
+* Chapter7 開発の継続
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+※ 本書に記載されている内容や本ダウンロードデータの運用によって、いかなる損害が生じても、株式会社マイナビ出版および著者は責任を負いかねますので、あらかじめご了承ください。
